@@ -1,10 +1,9 @@
 #include <iostream>
-#include <chrono>
 
 const int MAX = 10000;
 double A[MAX][MAX], x[MAX], y[MAX];
 
-// Inicializa A y x, asigna y = 0
+// Initialize the matrixs A and the vectors x and y
 void initialize()
 {
     for (int i = 0; i < MAX; i++)
@@ -16,7 +15,6 @@ void initialize()
     }
 }
 
-// Primer par de bucles
 void first_loops()
 {
     for (int i = 0; i < MAX; i++)
@@ -24,7 +22,6 @@ void first_loops()
             y[i] += A[i][j] * x[j];
 }
 
-// Segundo par de bucles
 void second_loops()
 {
     for (int j = 0; j < MAX; j++)
@@ -35,18 +32,19 @@ void second_loops()
 int main()
 {
     initialize();
-
-    auto start1 = std::chrono::high_resolution_clock::now();
+    clock_t start1 = clock();
     first_loops();
-    auto end1 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> time1 = end1 - start1;
-    std::cout << "Tiempo del primer par de bucles: " << time1.count() << " segundos" << std::endl;
+    clock_t end1 = clock();
+    double time1 = double(end1 - start1) / CLOCKS_PER_SEC;
+    std::cout << "Time of the first pair of loops: " << time1
+              << " seconds" << std::endl;
     for (int i = 0; i < MAX; i++)
         y[i] = 0;
-    auto start2 = std::chrono::high_resolution_clock::now();
+    clock_t start2 = clock();
     second_loops();
-    auto end2 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> time2 = end2 - start2;
-    std::cout << "Tiempo del segundo par de bucles: " << time2.count() << " segundos" << std::endl;
+    clock_t end2 = clock();
+    double time2 = double(end2 - start2) / CLOCKS_PER_SEC;
+    std::cout << "Time of the second pair of loops: " << time2
+              << " seconds" << std::endl;
     return 0;
 }
